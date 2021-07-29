@@ -33,12 +33,19 @@ function updateEvents(from, to) {
 }
 
 function inviteSomeoneToEvent(from, to, event) {
-  event.attendees.push({
+  let att = event.attendees;
+  const person = {
       "displayName": to,
       "email": to
-    });
+    };
+
+  if(att) {
+    att.push(person);
+  } else {
+    att = [person];
+  }
 
   Calendar.Events.patch({
-    "attendees": event.attendees
+    "attendees": att
   }, from, event.id);
 }
